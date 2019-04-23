@@ -2058,10 +2058,10 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@workstation/proxy@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.npmjs.org/@workstation/proxy/-/proxy-0.1.0.tgz#6901198a23ec8a495d31a0ec4d61d45b4f86bb23"
-  integrity sha512-PYLz8rtPsGJgUBwlILQPOBcdv131xC0RPDbg7gP56yR7Ak5H+1hsZtxms/jh5oBqR53H0F2/W0i+vmLy+WKtDg==
+"@workstation/proxy@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/@workstation/proxy/-/proxy-0.2.0.tgz#dfc3586abf60866530764eb8d04dabe5833e5db4"
+  integrity sha512-/dBrcPDTmBEESa35vuxZAUqAIPHNmeTaIxSI7K9xsOgzuxG3zEo9K9xK43USmLLUlsQXEYQCJXOzan1RxaEjoA==
   dependencies:
     agentkeepalive "^4.0.2"
     consola "^2.6.0"
@@ -2070,17 +2070,17 @@
     pify "^4.0.1"
     server-destroy "^1.0.1"
 
-"@workstation/utils@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.npmjs.org/@workstation/utils/-/utils-0.1.0.tgz#f5b48423d6346825ac29dbc1dfbe8a0bdff9877d"
-  integrity sha512-LUo/4sZdOBgMbq/DN/VZpIrQg0Oc79bBNo4eaRaXxtRHaOZc65wY2knvgSMWYWGP0k7Z8tESUbUbAawKBI8W5w==
+"@workstation/utils@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/@workstation/utils/-/utils-0.2.0.tgz#60a89591799033371ec7a1bc5e7478d10d5fb33d"
+  integrity sha512-icGXnU8NIY7NrWrtvJb50M8PjT7JkK6eJ592FZwU4SaQ8AS06a6Qz4hgEi6tQT5Uk5BMe8jrvnoPV1RtlxOKfg==
   dependencies:
     ws "^6.2.1"
 
-"@workstation/worker@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.npmjs.org/@workstation/worker/-/worker-0.1.0.tgz#cebf415429b4591646ec063e7a20685784fa3a16"
-  integrity sha512-Wwv8NA8e042WBSa/lTggS3n5O9zMS3UitqcUyMGKhmClc3gSxPwFhoaHP+suqrVLRkp5BfUVv7GDqTFTN8lHdg==
+"@workstation/worker@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/@workstation/worker/-/worker-0.2.0.tgz#6f0de0d9a1e21d67724e0ea48962807340a0daea"
+  integrity sha512-BIjuGiXZ6tjC/HFs5OJy38gbSX6eD1FokVefiK04QCbdkPVlW3zGOIM1SAQ0+JAR7Eo6eWLHTyrhts3U/vCimA==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -11492,12 +11492,12 @@ worker-rpc@^0.1.0:
   dependencies:
     microevent.ts "~0.1.0"
 
-workstation@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.npmjs.org/workstation/-/workstation-0.1.0.tgz#85527f372368e7885efd588d6e5c5c701b0061fe"
-  integrity sha512-CX1JRU3VFz1OhBF3Q7PRxMR4AjdWmH0N+qHmCj6KHr3YwjJQE/dR+mlnteUPrW91dKg/7NIj5fZZeyuKyFAz8A==
+workstation@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/workstation/-/workstation-0.2.0.tgz#0da3ef9e1b9b1ae83e29e114cffa30a2193d2910"
+  integrity sha512-6jvnKfkWZq1OahOxuZsb4Btv6vfiAWz+x4rDd7sL9yGz5HgXynydOignQjByfEOyE2mTKfdnb7nE31Q23c0JUg==
   dependencies:
-    "@workstation/proxy" "0.1.0"
+    "@workstation/proxy" "0.2.0"
     consola "^2.6.0"
     debounce "^1.2.0"
     defu "^0.0.1"
