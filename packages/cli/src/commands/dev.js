@@ -1,10 +1,11 @@
 import consola from 'consola'
 import chalk from 'chalk'
 import opener from 'opener'
-import { common, server } from '../options'
+import { common, server, worker } from '../options'
 import { eventsMapping, formatPath } from '../utils'
 import { showBanner } from '../utils/banner'
 import { showMemoryUsage } from '../utils/memory'
+import { startNuxtWorker, startWorkerServer } from '../utils/worker'
 
 export default {
   name: 'dev',
@@ -13,6 +14,7 @@ export default {
   options: {
     ...common,
     ...server,
+    ...worker,
     open: {
       alias: 'o',
       type: 'boolean',
@@ -21,6 +23,10 @@ export default {
   },
 
   async run(cmd) {
+    if (cmd.argv.worker) {
+      return this.worker(cmd)
+    }
+
     const { argv } = cmd
 
     await this.startDev(cmd, argv, argv.open)
@@ -93,5 +99,14 @@ export default {
 
   onBundlerChange(path) {
     this.logChanged({ event: 'change', path })
+  },
+
+  async worker(cmd) {
+    const config = await cmd.getNuxtConfig({ dev: true })
+
+    await startNuxtWorker('server', config)
+    await startNuxtWorker('builder', config)
+
+    await startWorkerServer(config)
   }
 }

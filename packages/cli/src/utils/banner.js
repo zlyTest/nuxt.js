@@ -45,3 +45,29 @@ export function showBanner(nuxt, showMemoryUsage = true) {
 
   process.stdout.write(successBox(messageLines.join('\n'), titleLines.join('\n')))
 }
+
+export function showWorkerBanner(options, listener) {
+  if (env.test) {
+    return
+  }
+
+  if (env.minimalCLI) {
+    consola.info('Listening on: ' + listener.url)
+    return
+  }
+
+  const titleLines = []
+  const messageLines = []
+
+  // Name and version
+  titleLines.push(`${chalk.green.bold('Nuxt.js')}`)
+
+  // Running mode
+  titleLines.push(`Running in ${options.dev ? chalk.bold.blue('development') : chalk.bold.green('production')} mode (${chalk.bold(options.mode || 'universal')})`)
+  titleLines.push(chalk.yellow('Using experimental workers'))
+
+  // Listener
+  messageLines.push(chalk.bold('Listening on: ') + chalk.underline.blue(listener.url))
+
+  process.stdout.write(successBox(messageLines.join('\n'), titleLines.join('\n')))
+}
