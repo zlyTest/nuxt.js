@@ -1,6 +1,7 @@
 import consola from 'consola'
 import chalk from 'chalk'
 import opener from 'opener'
+import workstation from 'workstation'
 import { common, server, worker } from '../options'
 import { eventsMapping, formatPath } from '../utils'
 import { showBanner } from '../utils/banner'
@@ -104,8 +105,22 @@ export default {
   async worker(cmd) {
     const config = await cmd.getNuxtConfig({ dev: true })
 
-    await startNuxtWorker('server', config)
-    await startNuxtWorker('builder', config)
+    let serverWorkers = []
+    let builderWorkers = []
+
+    const start = async () => {
+      const oldWorkers = [...serverWorkers, ...builderWorkers]
+      serverWorkers = await startNuxtWorker('server', config)
+      builderWorkers = await startNuxtWorker('builder', config)
+      await Promise.all(oldWorkers.map(w => w.stop()))
+    }
+
+    workstation.on('message:hook:watch:restart', (payload) => {
+      this.logChanged(payload)
+      start()
+    })
+
+    await start()
 
     await startWorkerServer(config)
   }

@@ -10,7 +10,8 @@ class BuilderWorker extends NuxtWorker {
     if (this.options.dev) {
       // Publish builder hooks
       this.publishHook('build:resources')
-      this.publishHook('bundler:progress', states => JSON.stringify(states))
+      this.publishHook('bundler:progress', states => states)
+      this.publishHook('watch:restart', payload => payload)
 
       // Register MFS service
       const mfsService = await createHTTPService({

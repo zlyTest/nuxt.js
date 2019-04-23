@@ -21,7 +21,7 @@ class ServerWorker extends NuxtWorker {
         endpoint: 'http://localhost:3000/_mfs' // TODO: Generate me!
       })
       this.subscribeHook('build:resources', () => [httpfs])
-      this.subscribeHook('bundler:progress', states => [JSON.parse(states)])
+      this.subscribeHook('bundler:progress', states => [states])
     }
   }
 }
