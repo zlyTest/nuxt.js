@@ -2,6 +2,7 @@ import consola from 'consola'
 import chalk from 'chalk'
 import opener from 'opener'
 import workstation from 'workstation'
+import { waitFor } from '@nuxt/utils'
 import { common, server, worker } from '../options'
 import { eventsMapping, formatPath } from '../utils'
 import { showBanner } from '../utils/banner'
@@ -103,24 +104,55 @@ export default {
   },
 
   async worker(cmd) {
-    const config = await cmd.getNuxtConfig({ dev: true })
+    // Keep config for server and cli args
+    let config
 
-    let serverWorkers = []
-    let builderWorkers = []
-
-    const start = async () => {
-      const oldWorkers = [...serverWorkers, ...builderWorkers]
-      serverWorkers = await startNuxtWorker('server', config)
-      builderWorkers = await startNuxtWorker('builder', config)
-      await Promise.all(oldWorkers.map(w => w.stop()))
+    // Keep old instance of each worker
+    const workers = {}
+    const replaceWorker = (name, wait) => async (newWorker) => {
+      if (wait) {
+        await waitFor(wait)
+      }
+      if (workers[name]) {
+        await workers[name].stop()
+      }
+      workers[name] = newWorker
     }
 
+    // Only start once in a time
+    let semaphore = false
+    const start = async () => {
+      if (semaphore) {
+        return
+      }
+      semaphore = true
+
+      try {
+        // Load config
+        config = await cmd.getNuxtConfig({ dev: true }).catch((error) => {
+          error = new Error(error)
+          error.message = 'Unable to load nuxt config: ' + error.message.replace(/^Error:/, '')
+          throw error
+        })
+
+        // Start workers
+        await Promise.all([
+          startNuxtWorker('server', config).then(replaceWorker('server', 1500)),
+          startNuxtWorker('builder', config).then(replaceWorker('builder'))
+        ])
+      } finally {
+        semaphore = false
+      }
+    }
+
+    // Initial start
+    await start()
+
+    // Full restart on watch:restart
     workstation.on('message:hook:watch:restart', (payload) => {
       this.logChanged(payload)
       start()
     })
-
-    await start()
 
     await startWorkerServer(config)
   }

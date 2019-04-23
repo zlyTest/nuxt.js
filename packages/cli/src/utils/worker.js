@@ -10,7 +10,11 @@ export function startNuxtWorker(name, options, count = 1) {
 
   const entrypoint = require.resolve('@nuxt/workers/bin/' + name)
 
-  return workstation.startMany(count, { entrypoint }, workerOptions, 'process')
+  if (count > 1) {
+    return workstation.startMany(count, { entrypoint }, workerOptions, 'process')
+  } else {
+    return workstation.start({ entrypoint }, workerOptions, 'process')
+  }
 }
 
 export async function startWorkerServer(options) {
